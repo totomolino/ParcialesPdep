@@ -26,10 +26,26 @@ nivelTerror unGrito = length . onomatopeya $ unGrito
 
 -- Punto 2
 
-type Nene = (String , Int , Float)
+type Nene = (String , Int , Double)
+
+nombre :: Nene -> String
+nombre (x,_,_) = x
+
+edad  :: Nene -> Int
+edad    (_,x,_) = x
+
+altura :: Nene -> Double
+altura  (_,_,x) = x
+
+
+ninio :: Nene
+ninio = ("juan" , 2 , 150)
 
 type Mounstruo = Nene -> Grito
 
 sullivan :: Mounstruo
-sullivan nino = 
-
+sullivan nino = (gritoGenerado,intensidadGenerada,haceMojarLaCama)
+ where gritoGenerado      = map (\ _ -> 'A') (nombre nino) ++ "GH"
+       intensidadGenerada = div 20 . edad $ nino
+       haceMojarLaCama    = (edad nino) < 3
+       
