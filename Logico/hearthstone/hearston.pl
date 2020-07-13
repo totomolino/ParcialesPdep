@@ -25,16 +25,11 @@ cartasCampo(jugador(_,_,_,_,_,Cartas), Cartas).
 %%%%%%%%%%%%%
 
 tieneCarta(Jugador, Carta) :-
-    cartas(Jugador, Carta).
 
-cartas(Jugador, Carta) :-
-    cartasMazo(Jugador, Carta).
 
-cartas(Jugador, Carta) :-
-    cartasMano(Jugador, Carta).
 
-cartas(Jugador, Carta) :-
-    cartasCampo(Jugador, Carta).
+
+
 
 %%%%%%%%%%%%%
 %% Punto 2 %%
