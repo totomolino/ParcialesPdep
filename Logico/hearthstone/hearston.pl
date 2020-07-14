@@ -25,18 +25,42 @@ cartasCampo(jugador(_,_,_,_,_,Cartas), Cartas).
 %%%%%%%%%%%%%
 
 tieneCarta(Jugador, Carta) :-
+    cartas(Jugador, Cartas),
+    member(Carta,Cartas).
 
 
+cartas(Jugador,Cartas) :-
+    cartasMazo(Jugador,Cartas).
 
+cartas(Jugador,Cartas) :-
+    cartasMano(Jugador,Cartas).
 
-
+cartas(Jugador,Cartas) :-
+    cartasCampo(Jugador,Cartas).
 
 %%%%%%%%%%%%%
 %% Punto 2 %%
 %%%%%%%%%%%%%
 
 esGuerrero(Jugador) :-
-    tieneCarta(Jugador,Carta),
-    esCriatura(Carta).
-
+    cartas(Jugador,_),
+    forall(tieneCarta(Jugador, Carta) , esCriatura(Carta) ).
+    
 esCriatura(criatura(_,_,_,_)).
+    
+
+%%%%%%%%%%%%%
+%% Punto 3 %%
+%%%%%%%%%%%%%
+
+finalDeTurno(JugadorAntes, JugadorDespues) :-
+    cartasMano(JugadorAntes,CartasMano),
+    cartasMazo(JugadorAntes,CartasMazo),
+    nth1(1,CartasMazo,PrimerCarta),
+    append(CartasMano, [PrimerCarta] , ManoNueva),
+    cartas(JugadorDespues, ManoNueva),
+    ganarMana(1,JugadorAntes, JugadorDespues).
+
+ganarMana(Num,JugadorAntes ,  jugador(_,_,ManaNueva,_,_,_)) :-
+    mana(JugadorAntes, Mana),
+    ManaNueva is Mana + Num.
