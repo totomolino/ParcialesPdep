@@ -47,13 +47,8 @@ permiteEntrar(Mago, Casa) :-
 tieneCaracter(Mago, Casa) :-
     mago(Mago, _, CaracterDelMago),
     casa(Casa),
-    caracterCasa(Casa, CaracterCasa),
-    forall( member(CaracterDeCasa,CaracterCasa),member(CaracterDeCasa,CaracterDelMago)).
-
-
-caracterCasa(Casa, CaracterCasa):-
-    casa(Casa),
-    findall(Caracter, caracteriza(Casa, Caracter) , CaracterCasa).
+    forall(caracteriza(Casa, Caracter),member(Caracter,CaracterDelMago)).
+  
 
 
 %%%%%%%%%%%%%
