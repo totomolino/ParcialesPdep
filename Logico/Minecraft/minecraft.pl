@@ -139,6 +139,18 @@ item(antorcha, [ itemCompuesto(palo), itemSimple(carbon, 1) ]).
 
 
 
+% leAlcanza(Jugador, itemSimple(Material, Cuanto)) :-
+%     cantidadDelItem(Jugador, Material, CantInventario),
+%     Cuanto =< CantInventario.
+
+% leAlcanza(Jugador, itemCompuesto(Item)) :-
+%     jugador(Jugador, _,_),
+%     item(Item, ItemsNecesarios),
+%     forall(member(ItemNec, ItemsNecesarios) , leAlcanza(Jugador, ItemNec)).
+
 % puedeConstruir(Jugador, Item) :-
-%     item(Item, Materiales),
-%     forall(mecantidadDelItem(Jugador, Material, CuantoMaterial).
+%     jugador(Jugador,_,_),
+%     item(Item, Requisitos),
+%     forall(member(Requisito, Requisitos) , leAlcanza(Jugador, Requisitos)).
+
+
