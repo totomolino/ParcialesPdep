@@ -141,3 +141,9 @@ buenaPareja(woody, buzz).
 buenaPareja(UnJuguete, OtroJuguete) :-
     tematica(UnJuguete, Tematica),
     tematica(OtroJuguete, Tematica).
+
+
+
+%%%%%%%%%%%%%
+%% Punto 5 %%
+%%%%%%%%%%%%%
