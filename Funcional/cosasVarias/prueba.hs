@@ -1,1 +1,0 @@
-aplicarNVeces :: Int -> (a -> b) -> a -> b
