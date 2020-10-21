@@ -5,7 +5,9 @@ import Escobas.*
 
 class Equipo {
 	
-	const integrantes = []
+	const property integrantes = [] 
+	
+	const property equipoRival
 	
 	method habilidadPromedio() {
 		
@@ -13,6 +15,13 @@ class Equipo {
 		
 	}
 	
+	method tieneJugadorEstrella(){
+		return integrantes.any({jugador => jugador.esJugadorEstrella()})
+		
+	}
 	
-	
+	method jugarPartidoContra(unEquipo){
+		
+	}
 }
+
