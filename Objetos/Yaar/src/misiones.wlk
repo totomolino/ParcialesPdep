@@ -10,9 +10,17 @@ object busquedaDelTesoro{
 	
 	const itemsRequeridos = ["brujula" , "mapa" , "botella de grogXD"]
 	
+	const llave = "llave de cofre"
+	
 	method sirveElPirata(pirata){
 		return pirata.tieneItems(itemsRequeridos) && (pirata.cantDinero() <= 5)
 	}
+	
+	method sirveBarco(barco){
+		return barco.algunoTieneItem(llave)
+	}
+	
+	
 	
 }
 
@@ -24,10 +32,14 @@ class ConvertirseEnLeyenda{
 		return pirata.itemsMasDe(10) && pirata.tieneItem(itemObligatorio)
 	}
 	
+	method sirveBarco(barco){
+		return true
+	}
+	
 	
 }
 
-class saqueo{
+class Saqueo{
 	
 	var dineroMaximo 
 	
@@ -37,5 +49,8 @@ class saqueo{
 		return (pirata.cantDinero() < dineroMaximo) && (pirata.seAnimaAAtacar(objetivo))
 	}
 	
+	method sirveBarco(barco){
+		return objetivo.esVulnerableA(barco)
+	}
 	
 }
