@@ -9,8 +9,6 @@ class Barco {
 	
 	const capacidad 
 	
-	const property ebriedadRequerida = 90
-	
 	method tieneLugar(){
 		return self.cantTripulantes() < capacidad
 	}
@@ -60,7 +58,7 @@ class Barco {
 	}
 	
 	method todosPasados(){
-		return tripulantes.all({pirata => pirata.alMenosXEbriedad(90)})
+		return tripulantes.all({pirata => pirata.estaPasado()})
 	}
 	
 	method anclarACiudad(ciudad){
@@ -77,7 +75,25 @@ class Barco {
 		return self.puedeHacerMision()
 	}
 	
+	method vulnerabilidad(pirata){
+		return pirata.estaPasado()
+	}
 	
+	method cuantosEstanPasados(){
+		return tripulantes.size({pirata => pirata.estaPasado()})
+	}
+	
+	method cuantosTiposDeItems(){
+		return self.todosLosItemsSinRepetir().size()
+	}
+	
+	method todosLosItemsSinRepetir() {
+		return (tripulantes.map({pirata => pirata.items()})).flatten().asSet()
+	}
+	
+	method elMasEbrioYRico(){
+		return tripulantes.max({pirata => pirata.ebriedad() && pirata.cantDinero()})
+	}
 	
 }
 
@@ -86,13 +102,17 @@ class Pirata {
 	
 	var property items = [" "]
 	
-	var property ebriedad
+	var property ebriedad = 0
 	
 	var property cantDinero = 0
 	
 	method esUtil(mision){
 		return mision.sirveElPirata(self)		
 		
+	}
+	
+	method estaPasado(){
+		return self.alMenosXEbriedad(90)
 	}
 	
 	method tieneItems(itemsRequeridos){
@@ -110,7 +130,8 @@ class Pirata {
 	}
 	
 	method seAnimaAAtacar(objetivo){
-		return self.alMenosXEbriedad(objetivo.ebriedadRequerida())
+		return objetivo.vulnerabilidad(self)
+		
 	}
 	
 	method alMenosXEbriedad(numero){
@@ -136,6 +157,25 @@ class Pirata {
 		self.tomarUnTrago()
 		self.gastarDinero(1)
 	}
+	
+}
+
+class PirataEspia inherits Pirata {
+	
+	override method ebriedad(nuevaEbriedad){
+		ebriedad = nuevaEbriedad.min(89)
+	}
+	
+	override method tomarUnTrago(){
+		ebriedad = (ebriedad + 5).min(89)
+	}
+	
+	
+	override method seAnimaAAtacar(objetivo){
+		return (objetivo.vulnerabilidad(self)) && (self.tieneItem("permiso"))
+	}
+	
+	
 	
 }
 

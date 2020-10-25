@@ -4,7 +4,7 @@ import barcoYPiratas.*
 
 class CiudadCostera {
 	
-	const property ebriedadRequerida = 50
+	const ebriedadRequerida = 50
 	
 	var property habitantes 
 	
@@ -18,6 +18,10 @@ class CiudadCostera {
 	
 	method aumentarHabitantes(numero){
 		habitantes += numero
+	}
+	
+	method vulnerabilidad(pirata){
+		return pirata.alMenosXEbriedad(ebriedadRequerida)
 	}
 	
 }
