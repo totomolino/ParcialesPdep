@@ -1,7 +1,10 @@
 import Pajaros.*
 import eventos.*
+import obstaculos.*
 
-class Isla {
+
+
+class IslaPajaro {
 	
 	var property habitantes = []
 	
@@ -16,9 +19,29 @@ class Isla {
 	method sucederEvento(evento){
 		evento.sucederEn(habitantes)
 	}
+	
+	method atacarIsla(islaEnemiga){
 		
+			
+	}
 	
 	
 	
+	
+}
+
+class IslaCerditos {
+	
+	var property obstaculos 
+	
+	method serAtacadaPor(pajaros){
+		if(pajaros.first().puedeAtacar(obstaculos.first()){
+			obstaculos.remove(obstaculos.first())
+			self.serAtacadaPor(pajaros.remove(pajaros.first()))
+		}
+		
+		
+		)
+	}
 	
 }

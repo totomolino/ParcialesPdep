@@ -22,6 +22,10 @@ class Pajaro {
 	method enojarseXVeces(numero){
 		numero.times({self.enojarse()})
 	}
+	
+	method puedeDerribarObstaculo(obstaculo){
+		return self.fuerza() > obstaculo.resistencia()
+	}
 
 	
 	
