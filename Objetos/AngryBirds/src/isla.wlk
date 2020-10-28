@@ -21,11 +21,14 @@ class IslaPajaro {
 	}
 	
 	method atacarIsla(islaEnemiga){
-		
+		habitantes.forEach({pajaro => pajaro.atacarSiPuede(islaEnemiga)})
 			
 	}
 	
-	
+	method recuperaronLosHuevos(islaEnemiga){
+		self.atacarIsla(islaEnemiga)
+		return islaEnemiga.perdieron()
+	}
 	
 	
 }
@@ -34,14 +37,15 @@ class IslaCerditos {
 	
 	var property obstaculos 
 	
-	method serAtacadaPor(pajaros){
-		if(pajaros.first().puedeAtacar(obstaculos.first()){
-			obstaculos.remove(obstaculos.first())
-			self.serAtacadaPor(pajaros.remove(pajaros.first()))
-		}
+	
+	method perdieron(){
+		return obstaculos.isEmpty()
+	}
+	
+	method obstaculoMasCercano(){
 		
+		obstaculos.head()
 		
-		)
 	}
 	
 }

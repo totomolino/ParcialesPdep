@@ -26,6 +26,13 @@ class Pajaro {
 	method puedeDerribarObstaculo(obstaculo){
 		return self.fuerza() > obstaculo.resistencia()
 	}
+	
+	method atacarSiPuede(islaEnemiga){
+		const obstaculoCercano = islaEnemiga.obstaculoMasCercano()
+		if(self.puedeDerribarObstaculo(obstaculoCercano)){
+			islaEnemiga.remove(obstaculoCercano)
+		}
+	}
 
 	
 	
