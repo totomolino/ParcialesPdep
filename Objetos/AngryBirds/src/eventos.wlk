@@ -31,7 +31,23 @@ class FiestaSorpresa {
 		if(homenajeados.any({pajaro => habitantes.contains(pajaro)})){
 			homenajeados.forEach({jugador => jugador.enojarse()})	
 		}
+		self.error("No hay ningun cumpleaniere")
+	}	
+}
+
+class MuchosEventos {
+	
+	var serieDeEventos 
+	
+	method sucederEn(habitantes){
+		serieDeEventos.forEach({evento => evento.sucederEn(habitantes)})
 	}
 	
 	
 }
+
+
+
+
+
+
