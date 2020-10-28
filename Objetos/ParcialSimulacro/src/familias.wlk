@@ -7,11 +7,11 @@ class Famiglia {
 	
 	var integrantes
 	
-	var todaLaFamilia = integrantes.add(don)
 	
+	method todaLaFamilia(){return integrantes.add(don)}
 	
 	method elMasPicante(){
-		return (todaLaFamilia.filter({persona => persona.estaVivo()})).max({persona => persona.cantDeArmas()})
+		return (self.todaLaFamilia().filter({persona => persona.estaVivo()})).max({persona => persona.cantDeArmas()})
 	}
 	
 	method armarATodosCon(arma){
@@ -22,6 +22,15 @@ class Famiglia {
 		self.armarATodosCon(new Revolver(cantDeBalas = 6))
 	}
 	
+	method ataqueSorpresa(otraFamilia){
+		if(not otraFamilia.todosMuertos()){
+		(self.todaLaFamilia()).forEach({miembro => miembro.hacerSuTrabajo(otraFamilia.elMasPicante())})
+	}
+		}
+	
+	method todosMuertos(){
+		return integrantes.all({persona => persona.estaMuerto()})
+	}
 	
 	
 	
@@ -62,6 +71,10 @@ class Persona {
 		return estado == vivo
 	}
 	
+	method estaMuerto(){
+		return estado == muerto
+	}
+	
 	method cantDeArmas(){
 		return armas.size() 
 			}
@@ -80,6 +93,10 @@ class Persona {
 	
 	method tieneArma(arma){
 		return armas.contains(arma)
+	}
+	
+	method tieneArmaSutil(){
+		return armas.any({arma => arma.esSutil()})
 	}
 	
 	
@@ -132,9 +149,7 @@ class Subjefe {
 		return subordinados.any({subordinado => subordinado.tieneArmaSutil()})
 	}
 	
-	method tieneArmaSutil(){
-		return armas.any({arma => arma.esSutil()})
-	}
+	
 	
 	
 }
@@ -148,9 +163,7 @@ class Soldado {
 		armas.anyOne({arma => arma.usar(victima)})
 	}
 	
-	method tieneArmaSutil(){
-		return armas.any({arma => arma.esSutil()})
-	}
+	
 	
 	
 	
