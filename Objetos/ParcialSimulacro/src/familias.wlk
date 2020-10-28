@@ -84,6 +84,8 @@ class Persona {
 	
 	var armas = rango.armas()
 	
+	var familia
+	
 	method morir(){
 		estado =  muerto
 	}
@@ -132,6 +134,10 @@ class Persona {
 	
 	method aumentarLealtad(numero){
 		lealtad = lealtad + ((lealtad * numero) / 100)
+	}
+	
+	method traicionarFamilia(){
+		
 	}
 	
 }
