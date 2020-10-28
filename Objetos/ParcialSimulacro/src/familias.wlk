@@ -74,6 +74,14 @@ class Persona {
 		rango.armas().add(arma)
 	}
 	
+	method sabeDespacharElegantemente(){
+		return rango.sabeDespachar()
+	}
+	
+	method tieneArma(arma){
+		return armas.contains(arma)
+	}
+	
 	
 }
 
@@ -89,6 +97,10 @@ class Don {
 	method hacerSuTrabajo(victima){
 		const subordinado = subordinados.anyOne()
 		2.times({subordinado.hacerSuTrabajo(victima)})
+	}
+	
+	method sabeDespachar(){
+		return true
 	}
 	
 	
@@ -116,6 +128,13 @@ class Subjefe {
 		self.hacerSuTrabajo(victima)
 	}
 	
+	method sabeDespachar(){
+		return subordinados.any({subordinado => subordinado.tieneArmaSutil()})
+	}
+	
+	method tieneArmaSutil(){
+		return armas.any({arma => arma.esSutil()})
+	}
 	
 	
 }
@@ -127,6 +146,10 @@ class Soldado {
 	
 	method hacerSuTrabajo(victima){
 		armas.anyOne({arma => arma.usar(victima)})
+	}
+	
+	method tieneArmaSutil(){
+		return armas.any({arma => arma.esSutil()})
 	}
 	
 	

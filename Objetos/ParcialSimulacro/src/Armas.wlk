@@ -15,7 +15,13 @@ class Revolver {
 		cantDeBalas -= 1
 	}
 	
+	method esSutil(){
+		return cantDeBalas == 1
+	}
+	
 }
+
+
 
 
 object escopeta {
@@ -36,6 +42,10 @@ class CuerdaDePiano{
 	
 	method usar(victima){
 		if(esDeBuenaCalidad){victima.morir()}
+	}
+	
+	method esSutil(){
+		return true
 	}
 	
 }
