@@ -32,6 +32,29 @@ class Famiglia {
 		return integrantes.all({persona => persona.estaMuerto()})
 	}
 	
+	method estanDeLuto(){
+		self.aumentarLealtadParaTodos(10)
+		self.convertirSoldadosAptos()
+		
+	}
+	
+	method aumentarLealtadParaTodos(numero){
+		integrantes.forEach({persona => persona.aumentarLealtad(numero)})
+	}
+	
+	method convertirSoldadosAptos(){
+		integrantes.forEach({persona => persona.convertirseEnSubjefe()})
+	}
+	
+	method cambioDeDon(){
+		const masLeal = don.subordinadoMasLeal()
+		if(masLeal.sabeDespacharElegantemente()){
+			don = masLeal
+		}
+	}
+	
+	
+	
 	
 	
 }
@@ -57,7 +80,9 @@ class Persona {
 	
 	var rango
 	
-	const armas = rango.armas()
+	var property lealtad
+	
+	var armas = rango.armas()
 	
 	method morir(){
 		estado =  muerto
@@ -99,6 +124,15 @@ class Persona {
 		return armas.any({arma => arma.esSutil()})
 	}
 	
+	method convertirEnSubjefe(){
+		if(rango.puedeSerSubjefe()){
+			rango = new Subjefe(subordinados = [], armas = armas , armasUsadas = []  )
+		}
+	}
+	
+	method aumentarLealtad(numero){
+		lealtad = lealtad + ((lealtad * numero) / 100)
+	}
 	
 }
 
@@ -120,6 +154,9 @@ class Don {
 		return true
 	}
 	
+	method subordinadoMasLeal(){
+		return subordinados.max({persona => persona.lealtad()})
+	}
 	
 	
 	
@@ -149,6 +186,9 @@ class Subjefe {
 		return subordinados.any({subordinado => subordinado.tieneArmaSutil()})
 	}
 	
+	method puedeSerSubjefe(){
+		return false
+	}
 	
 	
 	
@@ -161,6 +201,10 @@ class Soldado {
 	
 	method hacerSuTrabajo(victima){
 		armas.anyOne({arma => arma.usar(victima)})
+	}
+	
+	method puedeSerSubjefe(){
+		return (armas.size() > 5 )
 	}
 	
 	
