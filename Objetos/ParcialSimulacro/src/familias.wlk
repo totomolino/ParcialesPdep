@@ -14,6 +14,13 @@ class Famiglia {
 		return (todaLaFamilia.filter({persona => persona.estaVivo()})).max({persona => persona.cantDeArmas()})
 	}
 	
+	method armarATodosCon(arma){
+		integrantes.forEach({persona => persona.agregarArma(arma)})
+	}
+	
+	method sePicoElCondado(){
+		self.armarATodosCon(new Revolver(cantDeBalas = 6))
+	}
 	
 	
 	
@@ -29,6 +36,7 @@ object muerto{
 object vivo{
 	
 }
+
 object herido{
 	
 }
@@ -62,6 +70,9 @@ class Persona {
 		rango.hacerSuTrabajo(victima)
 	}
 	
+	method agregarArma(arma){
+		rango.armas().add(arma)
+	}
 	
 	
 }
