@@ -8,6 +8,8 @@ class Persona {
 	
 	var tipo
 	
+	var comidas
+	
 	method pedirUnaCosa(unaCosa, unaPersona){
 		
 		unaPersona.pasarCosaA(unaCosa, self)
@@ -51,18 +53,40 @@ class Persona {
 		posicion = nuevaPosicion
 	}
 	
-	method comer(bandeja){
-		if(self.decideComer(bandeja)){
-			
-		}
-		
-		
+	method comer(unaComida){
+		if(self.decideComer(unaComida)){
+			self.registrarMorfi(unaComida)				
+		}else self.error("No le gusta la comida")
 	}
 	
-	method decideComer(bandeja){
-		return tipo.leGusta(bandeja)
+	method registrarMorfi(unaComida){
+		comidas.add(unaComida)
 	}
 	
+	method decideComer(unaComida){
+		return tipo.leGusta(unaComida)
+	}
+	
+	method estaPipon(){
+		return comidas.any({comida => comida.esPesada()})
+	}
+	
+	method laEstaPasandoBien(){
+		return self.comioAlgo()
+	}
+	
+	method comioAlgo(){
+		return not comidas.isEmpty()
+	}
+	
+	
+}
+
+object osky inherits Persona {
+	
+	override method laEstaPasandoBien(){
+		
+	}
 	
 }
 
@@ -111,11 +135,15 @@ object normal {
 }
 
 
-class Bandeja {
+class Comida {
 	
 	const property tieneCarne
 	
 	const property calorias
+	
+	method esPesada(){
+		return calorias > 500
+	}
 	
 }
 
@@ -123,8 +151,8 @@ class Bandeja {
 
 class Vegetariano {
 	
-	method leGusta(bandeja){
-		return not bandeja.tieneCarne()
+	method leGusta(unaComida){
+		return not unaComida.tieneCarne()
 	}
 	
 	
@@ -134,8 +162,8 @@ class Dietetico {
 	
 	const caloriasSegunOMS = 500
 	
-	method leGusta(bandeja){
-		return bandeja.calorias() < caloriasSegunOMS
+	method leGusta(unaComida){
+		return unaComida.calorias() < caloriasSegunOMS
 	}
 	
 	
@@ -145,7 +173,7 @@ class Alternado{
 	
 	var aceptaComida = true
 	
-	method leGusta(bandeja){
+	method leGusta(unaComida){
 		aceptaComida = not aceptaComida
 		return aceptaComida
 	}
@@ -158,8 +186,8 @@ class Combinado {
 	
 	const todosLosTipos = [new Alternado(), new Dietetico(), new Vegetariano()]
 	
-	method leGusta(bandeja){
-		return todosLosTipos.all({tipo => tipo.leGusta(bandeja)})
+	method leGusta(unaComida){
+		return todosLosTipos.all({tipo => tipo.leGusta(unaComida)})
 	}
 	
 }
