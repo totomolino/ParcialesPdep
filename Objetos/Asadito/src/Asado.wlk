@@ -79,18 +79,48 @@ class Persona {
 		return not comidas.isEmpty()
 	}
 	
+	method comioCarne(){
+		return comidas.any({comida => comida.esCarne()})
+	}
+	
 	
 }
 
 object osky inherits Persona {
 	
 	override method laEstaPasandoBien(){
-		
+		super()
+		return true
 	}
 	
 }
 
+object moni inherits Persona {
+	
+	override method laEstaPasandoBien(){
+		super()
+		return posicion == 1
+	}
+	
+}
 
+object facu inherits Persona {
+	
+	override method laEstaPasandoBien(){
+		super()
+		return self.comioCarne()
+	}
+	
+}
+
+object vero inherits Persona {
+	
+	override method laEstaPasandoBien(){
+		super()
+		return elementosCerca.size() <= 3
+	}
+	
+}
 
 
 
@@ -137,7 +167,7 @@ object normal {
 
 class Comida {
 	
-	const property tieneCarne
+	const property esCarne
 	
 	const property calorias
 	
@@ -152,7 +182,7 @@ class Comida {
 class Vegetariano {
 	
 	method leGusta(unaComida){
-		return not unaComida.tieneCarne()
+		return not unaComida.esCarne()
 	}
 	
 	
