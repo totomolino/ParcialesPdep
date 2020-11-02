@@ -6,7 +6,9 @@ class ArbolNavidenio {
 	
 	var tarjetas
 	
-	var regalosYTarjetas  = regalos + tarjetas 
+	var regalosYTarjetas  = regalos + tarjetas
+	
+	var adornos 
 	
 	method capacidadDeRegalos()
 	
@@ -33,6 +35,10 @@ class ArbolNavidenio {
 	
 	method costoTotal(){
 		return regalosYTarjetas.sum({regaloOTarjeta => regaloOTarjeta.precio() })
+	}
+	
+	method importanciaTotal(){
+		adornos.sum({adorno => adorno.importancia()})
 	}
 	
 	
