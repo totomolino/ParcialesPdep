@@ -35,7 +35,7 @@ class Tarjetas inherits Presente {
 
 class Adorno {
 	
-	const pesoBase
+	const property pesoBase
 	
 	const superioridad
 	
@@ -69,6 +69,20 @@ class FiguraElaboradas inherits Adorno {
 	
 }
 
+class Guirnaldas inherits Adorno {
+	
+	const cuandoSeCompro
+	
+	const aniosEnUso = new Date() - cuandoSeCompro
+	
+	override method pesoBase(){
+		return super() - (100 * aniosEnUso)
+	}
+	
+	
+	
+	
+}
 
 
 
