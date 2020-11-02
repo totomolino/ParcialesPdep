@@ -14,7 +14,11 @@ class Regalo inherits Presente{
 	
 	const property ocupaEspacio = true
 	
+	const precioPromedio
 	
+	method esRegaloTkm(){
+		return precio > precioPromedio
+	}
 	
 	
 }

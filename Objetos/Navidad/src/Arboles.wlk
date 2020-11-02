@@ -45,7 +45,19 @@ class ArbolNavidenio {
 		return adornos.max({adorno => adorno.peso()})
 	}
 	
+	method esArbolPortentoso(){
+		return self.muchosRegalosTkm(5) or self.hayUnaTarjetaConValorMayorA(1000)
+	}
 	
+	method muchosRegalosTkm(numero){
+		return regalos.filter({regalo => regalo.esRegaloTkm()}).size() >= numero
+	}
+	
+	method hayUnaTarjetaConValorMayorA(unNumero){
+		
+		return tarjetas.any({tarjeta => tarjeta.precio() >= unNumero })
+		
+	}
 }
 
 
