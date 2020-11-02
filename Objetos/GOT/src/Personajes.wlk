@@ -1,12 +1,4 @@
 
-class Poniente {
-	const property todasLasCasas
-	
-	method casaMasPobre(){
-		return todasLasCasas.min({casa => casa.patrimonio()})
-	}
-}
-
 
 
 class Personaje {
@@ -85,13 +77,26 @@ class Personaje {
 		casa.derrochar(unPorcentaje)
 	}
 	
+	method esAliado(unaPersona){
+		return aliados.contains(unaPersona) }
 	
 }
 
-object sutil {
+class Sutil {
+	
+	const todasLasCasas
+	
+	const casaMasPobre = todasLasCasas.min({casa => casa.patrimonio()})
+	
+	method losVivosDeLaMasPobre() {
+		return casaMasPobre.miembros().filter({persona => persona.estaVivo()})
+	}
 	
 	method complotar(unaPersona){
-		
+		const pobres = self.losVivosDeLaMasPobre()
+		const unoPobre = pobres.anyOne()
+		if(pobres.isEmpty()){self.error("No hay nadie con quien casarse")}
+		unaPersona.casarseCon(unoPobre)
 	}
 	
 }
@@ -141,8 +146,25 @@ class Conspiracion {
 	
 	const complotados
 	
-	method hacerUnComplotA(unaVictima){
+	const unaVictima 
+	
+	method hacerUnComplot(){
+		if(unaVictima.esPeligroso()){
+			self.ejecutarConspiracion()
+		}
+		else self.error("No es peligroso la victima")
+		}
+		
+	method cuantosComplotados(){
+		return complotados.filter({persona => persona.esAliado(unaVictima)})		
+		}
+		
+	method ejecutarConspiracion(){
 		complotados.forEach({complotador => complotador.complotar(unaVictima)})
+	}
+	
+	method conspiracionFunciono(){
+		return not unaVictima.esPeligroso()
 	}
 	
 	
