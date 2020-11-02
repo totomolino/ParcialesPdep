@@ -1,11 +1,18 @@
 import Arboles.*
 
-
-class Regalo {
-	
+class Presente{
 	const property precio
 	
 	const property destinatario
+	
+	
+}
+
+
+
+class Regalo inherits Presente{
+	
+	const property ocupaEspacio = true
 	
 	
 	
@@ -13,13 +20,14 @@ class Regalo {
 }
 
 
-class Tarjetas {
-	
-	const precio = 2
-	
-	const property destinatario
+class Tarjetas inherits Presente {
 	
 	const property valorAdjunto
+	
+	const property ocupaEspacio = false
+	
+	
+	override method precio(){ return 2}
 	
 	
 }

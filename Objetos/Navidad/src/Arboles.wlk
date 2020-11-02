@@ -4,11 +4,15 @@ class ArbolNavidenio {
 	
 	var regalos 
 	
+	var tarjetas
+	
+	var regalosYTarjetas  = regalos + tarjetas 
+	
 	method capacidadDeRegalos()
 	
 	method agregarUnRegalo(unRegalo){
 		
-		if(not self.arbolLleno()){
+		if(not self.arbolLleno() && unRegalo.ocupaEspacio()){
 			regalos.add(unRegalo)
 		}
 		else self.error("No hay mas lugar para poner regalos pa")
@@ -19,6 +23,17 @@ class ArbolNavidenio {
 		return regalos.size() == self.capacidadDeRegalos() 
 	}
 	
+	method beneficiarios(){
+		return self.destinatariosDe(regalosYTarjetas) 
+		}
+	
+	method destinatariosDe(unosPresentes){
+		return unosPresentes.map({presente => presente.destinatario()})
+	}
+	
+	method costoTotal(){
+		return regalosYTarjetas.sum({regaloOTarjeta => regaloOTarjeta.precio() })
+	}
 	
 	
 }
