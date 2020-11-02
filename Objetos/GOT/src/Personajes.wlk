@@ -4,6 +4,12 @@ class Personaje {
 	
 	var conyuges = []
 	
+	var property acompaniantes
+	
+	var estado = vivo
+	
+	var aliados = self.aliados()
+	
 	method noTienePareja(){
 		return conyuges.isEmpty()
 	}
@@ -24,7 +30,40 @@ class Personaje {
 		return casa.patrimonio() / casa.size()
 	}
 	
+	method estaSolo(){
+		return acompaniantes.isEmpty()
+	}
+	
+	method aliados(){
+		return acompaniantes + conyuges + casa.miembros().remove(self)
+	}
+	
+	method esPeligroso(){
+		return self.estaVivo() && (self.aliadosTienenMasDe(10000) or self.todosLosConyugesRicos() or self.conoceUnPeligroso())
+	}
+	
+	method estaVivo(){
+		return estado == vivo
+	}
+	
+	method aliadosTienenMasDe(unNumero){
+		return aliados.sum({aliado => aliado.patrimonio()}) >= unNumero
+	}
+	
+	method todosLosConyugesRicos(){
+		return conyuges.all({conyuge => conyuge.esRico()})
+	}
+	
+	method conoceUnPeligroso(){
+		return aliados.any({aliado => aliado.esPeligroso()})
+	}
+	
+	
 }
+
+object vivo{}
+
+object muerto{}
 
 class Casamiento {
 	
