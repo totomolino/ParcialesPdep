@@ -26,6 +26,8 @@ class Personaje {
 		self.error("No se pueden casar")
 	}
 	
+	
+	
 	method patrimonioPropio(){
 		return casa.patrimonio() / casa.size()
 	}
@@ -65,26 +67,7 @@ object vivo{}
 
 object muerto{}
 
-class Casamiento {
-	
-	const marido
-	
-	const mujer
-	
-	
-	method sePuedenCasar(){
-		return marido.puedeCasarseCon(mujer) && mujer.puedeCasarseCon(marido)
-		
-	}
-	
-	method casarse(){
-		
-		marido.casarseCon(mujer)
-		mujer.casarseCon(marido)
-		
-	}
-	
-}
+
 
 
 
