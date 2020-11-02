@@ -7,6 +7,9 @@ class Regalo {
 	
 	const property destinatario
 	
+	
+	
+	
 }
 
 
@@ -34,3 +37,40 @@ class Adorno {
 	
 	
 }
+
+
+class Luces inherits Adorno {
+	
+	const cantidadDeLuces 
+	
+	method luminosidad(){return cantidadDeLuces}
+	
+	override method importancia(){
+		return  self.luminosidad() * super() 
+	}
+	
+}
+
+class FiguraElaboradas inherits Adorno {
+	
+	const volumen
+	
+	override method importancia(){
+		return volumen * super() 
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

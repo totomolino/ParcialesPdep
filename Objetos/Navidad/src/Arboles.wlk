@@ -4,9 +4,20 @@ class ArbolNavidenio {
 	
 	var regalos 
 	
-	
-	
 	method capacidadDeRegalos()
+	
+	method agregarUnRegalo(unRegalo){
+		
+		if(not self.arbolLleno()){
+			regalos.add(unRegalo)
+		}
+		else self.error("No hay mas lugar para poner regalos pa")
+		
+	}
+	
+	method arbolLleno(){
+		return regalos.size() == self.capacidadDeRegalos() 
+	}
 	
 	
 	
