@@ -41,6 +41,10 @@ class ArbolNavidenio {
 		adornos.sum({adorno => adorno.importancia()})
 	}
 	
+	method adornoMasPesado(){
+		return adornos.max({adorno => adorno.peso()})
+	}
+	
 	
 }
 
