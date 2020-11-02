@@ -1,3 +1,14 @@
+
+class Poniente {
+	const property todasLasCasas
+	
+	method casaMasPobre(){
+		return todasLasCasas.min({casa => casa.patrimonio()})
+	}
+}
+
+
+
 class Personaje {
 	
 	const property casa
@@ -9,6 +20,8 @@ class Personaje {
 	var estado = vivo
 	
 	var aliados = self.aliados()
+	
+	const personalidad
 	
 	method noTienePareja(){
 		return conyuges.isEmpty()
@@ -60,6 +73,79 @@ class Personaje {
 		return aliados.any({aliado => aliado.esPeligroso()})
 	}
 	
+	method complotarA(unaPersona){
+		personalidad.complotar(unaPersona)
+	}
+	
+	method morir(){
+		estado = muerto
+	}
+	
+	method derrocharDeSuCasa(unPorcentaje){
+		casa.derrochar(unPorcentaje)
+	}
+	
+	
+}
+
+object sutil {
+	
+	method complotar(unaPersona){
+		
+	}
+	
+}
+
+object asesino {
+	
+	method complotar(unaPersona){
+		unaPersona.morir()
+	}
+	
+	
+}
+
+
+object asesinoPrecavido {
+	
+	method complotar(unaPersona){
+		if(unaPersona.estaSolo()){
+			unaPersona.morir()
+		}
+		
+	}
+	
+	
+	
+}
+
+class Disipados {
+	
+	const porcentaje
+	
+	method complotar(unaPersona){
+		unaPersona.derrocharDeSuCasa(porcentaje)
+	}
+	
+}
+
+object miedosos {
+	
+	 method complotar(unaPersona){}
+	
+}
+
+
+
+class Conspiracion {
+	
+	const complotados
+	
+	method hacerUnComplotA(unaVictima){
+		complotados.forEach({complotador => complotador.complotar(unaVictima)})
+	}
+	
+	
 	
 }
 
@@ -87,6 +173,11 @@ class Casa {
 		return patrimonio > 1000
 	}
 	
+	method derrochar(unPorcentaje){
+		
+		patrimonio -= ((patrimonio*unPorcentaje)/100)
+		
+	}
 	
 	
 	
