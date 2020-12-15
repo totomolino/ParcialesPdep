@@ -31,10 +31,55 @@ atiende(vale, Dia, Desde, Hasta):- atiende(juanC, Dia, Desde, Hasta).
 quienAtiende(Dia, Hora, Persona):- 
     atiende(Persona, Dia, Desde, Hasta),
     Desde =< Hora,
-    Hasta >= Hora. 
+    Hasta >= Hora.
 
 
 
+%%%%%%%%%%%%%
+%% Punto 3 %%
+%%%%%%%%%%%%%
+
+persona(Persona):-atiende(Persona,_,_,_).
+
+dia(Dia):-atiende(_,Dia,_,_).
+
+% trabajaSola(Persona, Dia).
+
+
+trabajaSola(Persona, Dia, Hora):-
+    quienAtiende(Dia, Hora, Persona),
+    not((quienAtiende(Dia,Hora,OtraPersona) , OtraPersona \= Persona)).
 
 
 
+%%%%%%%%%%%%%
+%% Punto 4 %%
+%%%%%%%%%%%%%
+
+
+posibilidadesAtencion(Dia, Personas):-
+    findall(Persona, atiende(Persona, Dia, _, _), Quienes),
+    combinar(Quienes, Personas).
+
+
+combinar([] , []).
+combinar([Posible | Posibles] , [Posible | Personas] ):- combinar(Posibles, Personas).
+combinar([_ | Posibles] , Personas) :- combinar(Posibles, Personas).
+
+
+
+%%%%%%%%%%%%%
+%% Punto 5 %%
+%%%%%%%%%%%%%
+
+
+ventas(dodain, lunes, 10, 8, [golosinas(1200) , cigarrillos(jockey), golosinas(50)]).
+ventas(dodain, miercoles, 12, 8, [bebidas(alcohilica, 8) , bebidas(noAlcoholica, 1) , golosinas(10)]).
+ventas(martu, miercoles, 12, 8, [golosinas(1000), cigarrillos(chesterfield) , cigarrillos(colorado), cigarrillos(parisiennes)]).
+ventas(lucas, martes, 11, 8, [golosinas(600)]).
+ventas(lucas, martes, 18, 8, [bebidas(noAlcoholica, 2) , cigarrillos(derby)]).
+
+
+esVendedorSuertudo(Vendedor):-
+    ventas(Vendedor,_,_,_,_),
+    
