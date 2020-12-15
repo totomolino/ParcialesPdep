@@ -75,11 +75,20 @@ combinar([_ | Posibles] , Personas) :- combinar(Posibles, Personas).
 
 ventas(dodain, lunes, 10, 8, [golosinas(1200) , cigarrillos(jockey), golosinas(50)]).
 ventas(dodain, miercoles, 12, 8, [bebidas(alcohilica, 8) , bebidas(noAlcoholica, 1) , golosinas(10)]).
-ventas(martu, miercoles, 12, 8, [golosinas(1000), cigarrillos(chesterfield) , cigarrillos(colorado), cigarrillos(parisiennes)]).
+ventas(martu, miercoles, 12, 8, [golosinas(1000), cigarrillos(chesterfield, colorado, parisiennes)]).
 ventas(lucas, martes, 11, 8, [golosinas(600)]).
 ventas(lucas, martes, 18, 8, [bebidas(noAlcoholica, 2) , cigarrillos(derby)]).
 
 
 esVendedorSuertudo(Vendedor):-
     ventas(Vendedor,_,_,_,_),
-    
+    forall(ventas(Vendedor, _, _ , _, [PrimerProducto | _]) , esImportante(PrimerProducto) ).
+
+
+esImportante(golosinas(Precio)):- Precio > 100.
+
+esImportante(cigarrillos(Marcas)):- length(Marcas, CantidadMarcas), CantidadMarcas > 2.
+
+
+esImportante(bebidas(alcohilica,_)).
+esImportante(bebidas(_ ,Cantidad)):- Cantidad > 5.
