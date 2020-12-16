@@ -126,3 +126,17 @@ puedeHacerPedido(Trabajador, Cliente):-
 %%%%%%%%%%%%%
 %% Punto 6 %%
 %%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+forall( algo , otraCosa) : algo entonces otraCosa
+
+not((algo, not(otraCosa)))

@@ -50,6 +50,8 @@ trabajaSola(Persona, Dia, Hora):-
     quienAtiende(Dia, Hora, Persona),
     not((quienAtiende(Dia,Hora,OtraPersona) , OtraPersona \= Persona)).
 
+%   forall(quienAtiende(Dia, Hora, OtraPersona) , OtraPersona == Persona).
+
 
 
 %%%%%%%%%%%%%
