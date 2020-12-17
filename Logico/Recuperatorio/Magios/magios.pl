@@ -122,11 +122,12 @@ envidiaA(UnaPersona, OtraPersona):-
 %% Punto 4 %%
 %%%%%%%%%%%%%
 
-
+%4) Definir el predicado masEnvidioso/1, permite conocer las personas más envidiosas. ( Nota: definirlo sin usar forall/2).
 
 masEnvidioso(Persona):-
     persona(Persona),
-    forall((persona(OtraPersona) , OtraPersona \= Persona) , envidiaMas(Persona, OtraPersona)).
+    not(((persona(OtraPersona) , OtraPersona \= Persona) , not(envidiaMas(Persona, OtraPersona)))).
+%    forall((persona(OtraPersona) , OtraPersona \= Persona) , envidiaMas(Persona, OtraPersona)).
 
 envidiaMas(UnaPersona, OtraPersona):-
     sienteEnvidia(UnaPersona, UnaLista),
