@@ -109,7 +109,9 @@ esAmigo(conejoDePascua, cavenaghi).
 
 
 
-estaEnfermo(Personaje).
+estaEnfermo(campanita).
+estaEnfermo(reyesMagos).
+estaEnfermo(conejoDePascua).
 
 puedeAlegrar(_, Persona):-
     sueniaCon(Persona, _).
@@ -122,8 +124,16 @@ condicion(Personaje):-
     not(estaEnfermo(Personaje)).
 
 condicion(Personaje):-
-    
+    personajeBackup(Personaje, PersonajeBackup),
+    not(estaEnfermo(PersonajeBackup)).
 
+
+personajeBackup(Personaje, PersonajeBackup):-
+    esAmigo(Personaje, PersonajeBackup).
+
+personajeBackup(Personaje, PersonajeBackup):-
+    esAmigo(Personaje, OtroPersonaje),
+    esAmigo(OtroPersonaje, PersonajeBackup).
 
 
 
