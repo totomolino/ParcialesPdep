@@ -123,10 +123,16 @@ platoConIngredientePopular(entrada(_,Ingredientes , _)) :-
 %%%%%%%%%%%%%
 
 platoUsaIngrediente(postre(_, Ingrediente, _), Ingrediente) :- cocina(_, postre(_, Ingrediente, _), _).
-platoUsaIngrediente(entrada(_, Ingredientes, _), Ingrediente) :- cocina(_, entrada(_, Ingredientes, _), _), member(Ingrediente, Ingredientes).
+
+platoUsaIngrediente(entrada(_, Ingredientes, _), Ingrediente) :- 
+    cocina(_, entrada(_, Ingredientes, _), _),
+    member(Ingrediente, Ingredientes).
 
 
-ingrediente(Ingrediente) :- cocina(_, entrada(_, Ingredientes, _), _), member(Ingrediente, Ingredientes).
+ingrediente(Ingrediente) :- 
+    cocina(_, entrada(_, Ingredientes, _), _),
+    member(Ingrediente, Ingredientes).
+
 ingrediente(Ingrediente) :- cocina(_, postre(_, Ingrediente, _), _).
 
 
