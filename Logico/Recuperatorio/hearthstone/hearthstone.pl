@@ -64,7 +64,8 @@ cartas(Jugador, Cartas):-
 cartas(Jugador, Cartas):-
     cartasCampo(Jugador, Cartas).
     
-
+carta(Carta):-
+    tieneCarta(_, Carta).
 
 %%%%%%%%%%%%%
 %% Punto 2 %%
@@ -111,7 +112,7 @@ ganarMana(JugadorAntes, JugadorDespues, Cuanto):-
 
 puedeJugarCarta(Jugador, Carta):-
 %    tieneCarta(Jugador, Carta),
-    jugador(Jugador).
+    jugador(Jugador),
     carta(Carta),
     mana(Jugador, Mana),
     mana(Carta, ManaNecesario),
@@ -122,9 +123,100 @@ puedeJugarCarta(Jugador, Carta):-
 
 cualesPuedeJugar(Jugador, Cartas):-
     empezarTurno(Jugador, JugadorDespues),
-    findall(Carta, (puedeJugarCarta(Jugador, Carta) , estaEnMano()))
+    findall(Carta, (puedeJugarCarta(JugadorDespues, Carta) , estaEnMano(JugadorDespues, Carta)) , Cartas).
+
+estaEnMano(Jugador, Carta):-
+    cartasMano(Jugador, Cartas),
+    member(Carta, Cartas).
 
 
 
+%%%%%%%%%%%%%
+%% Punto 5 %%
+%%%%%%%%%%%%%
+
+
+posiblesJugadas(Jugador, Combinacion):-
+    cualesPuedeJugar(Jugador, Cartas),
+    empezarTurno(Jugador, JugadorDespues),
+    mana(JugadorDespues, Mana),
+    combinacionesPosibles(Cartas, Mana, Combinacion).
+
+
+combinacionesPosibles([] , _ , []).
+
+combinacionesPosibles([Carta | Cartas] , Mana , [Carta | Posibles]):-
+    mana(Carta, Costo),
+    Mana >= Costo,
+    ManaRestante is Mana - Costo,
+    combinacionesPosibles(Cartas, ManaRestante, Posibles).
+
+combinacionesPosibles([_ | Cartas] , Mana , Posibles):- combinacionesPosibles(Cartas, Mana, Posibles).
+
+
+
+%%%%%%%%%%%%%
+%% Punto 6 %%
+%%%%%%%%%%%%%
+
+
+% cartaMasDanina(Jugador, NombreDeCarta):-
+%     tieneCarta(Jugador, criatura(NombreDeCarta, DanioMaximo, _, _)),
+%     not(((tieneCarta(Jugador, criatura(OtroNombre , OtroDanio,_)) , OtroNombre \= NombreDeCarta) , DanioMaximo > OtroDanio )).
+
+
+cartaMasDanina(Jugador, NombreCarta) :-
+    jugador(Jugador),
+    cartas(Jugador, Cartas),
+    forall(member(Carta,Cartas) , not(supera(Carta, CartaFuerte))),
+    nombre(CartaFuerte, NombreCarta).
+
+
+supera(Carta, CartaFuerte) :-
+    danio(Carta, DanioCarta),
+    danio(CartaFuerte, DanioFuerte),
+    DanioCarta > DanioFuerte.
+
+
+
+%%%%%%%%%%%%%
+%% Punto 7 %%
+%%%%%%%%%%%%%
+
+
+% a 
+
+jugarContra(Carta, JugadorAntes, JugadorFinal):-
+    esHechizoDanio(Carta),
+    puedeJugarCarta(JugadorAntes, Carta),
+    atacar(Carta, JugadorAntes , JugadorDespues),
+    tirarCarta(JugadorDespues, Carta, JugadorFinal).
+
+
+tirarCarta(Jugador, Carta, JugadorFinal):-
+    cartasMano(Jugador, Cartas),
+    member(Carta, Cartas),
+    nth1(_, )
+
+
+
+esHechizoDanio(hechizo(_, danio(_),_)).
+
+atacar(Carta, JugadorAntes, JugadorDespues):-
+    danio(Carta, Danio),
+    restarVida(JugadorAntes, Danio, JugadorDespues).
+
+restarVida(Jugador, Danio, JugadorDespues):-
+    vida(Jugador, Vida),
+    vida(JugadorDespues, VidaFinal),
+    VidaFinal is Vida - Danio.
+
+
+% b 
+
+esHechizoCuracion(hechizo(_, curar(_) , _)).
+
+jugar(Carta, JugadorAntes, JugadorDespues):-
+    esHechizoCuracion()
 
 
