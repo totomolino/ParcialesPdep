@@ -8,13 +8,19 @@
 
 %cocina(nombre, plato, puntos)
 cocina(mariano, principal(nioquis, 50), 80).
+
 cocina(julia, principal(pizza, 100), 60).
+
 cocina(hernan, postre(panqueque, dulceDeLeche, 100), 60).
 cocina(hernan, postre(trufas, dulceDeLeche, 60), 80).
 cocina(hernan, entrada(ensalada, [tomate, zanahoria, lechuga], 70), 29).
+
 cocina(susana, entrada(empanada, [carne, cebolla, papa], 50), 50).
 cocina(susana, postre(pastelito, dulceDeMembrillo, 50), 60).
+cocina(susana, postre(pastelito, dulceDeMembrillo, 50), 60).
+
 cocina(melina, postre(torta, zanahoria, 60),50).
+
 
 
 esAmigo(mariano, susana).
@@ -122,6 +128,12 @@ platoConIngredientePopular(entrada(_,Ingredientes , _)) :-
 %% Punto 6 %%
 %%%%%%%%%%%%%
 
+
+cocineroUsaIngrediente(Cocinero, Ingrediente):-
+    cocina(Cocinero, Plato, _),
+    platoUsaIngrediente(Plato, Ingrediente).
+
+
 platoUsaIngrediente(postre(_, Ingrediente, _), Ingrediente) :- cocina(_, postre(_, Ingrediente, _), _).
 
 platoUsaIngrediente(entrada(_, Ingredientes, _), Ingrediente) :- 
@@ -136,16 +148,37 @@ ingrediente(Ingrediente) :-
 ingrediente(Ingrediente) :- cocina(_, postre(_, Ingrediente, _), _).
 
 
-ingredientePopularMasUsado(Cocinero, Ingrediente):-
+
+
+ingredientesPopulares(Cocinero , Ingrediente):-
+    cocina(Cocinero, Plato, _),
+    platoUsaIngrediente(Plato, Ingrediente),
+    popular(Ingrediente).
+
+
+
+ ingredientePopularMasUsado(Cocinero, Ingrediente):-
+    cocinero(Cocinero),
+    ingredientesPopulares(Cocinero, Ingrediente),
+    cantidadDeVecesQueUsa(Cocinero, Ingrediente, Cantidad),
+    forall((ingredientesPopulares(Cocinero, OtroIngrediente) , OtroIngrediente \= Ingrediente) , (cantidadDeVecesQueUsa(Cocinero , OtroIngrediente, OtraCantidad) , Cantidad > OtraCantidad ) ).
+
+
+
+cantidadDeVecesQueUsa(Cocinero, Ingrediente, Cantidad):-
     cocinero(Cocinero),
     ingrediente(Ingrediente),
-    popular(Ingrediente),
-    platoUsaIngrediente(Plato , Ingrediente).
+    findall(Ingrediente, cocineroUsaIngrediente(Cocinero, Ingrediente), IngredientesRepetidos),
+    length(IngredientesRepetidos, Cantidad).
+    
 
 
 %%%%%%%%%%%%%
 %% Punto 7 %%
 %%%%%%%%%%%%%
+
+
+
 
 
 esRecomendadoPorColega(UnCocinero, OtroCocinero):-
@@ -160,7 +193,6 @@ amistad(Uno, Otro):-
 amistad(Uno, Otro) :-
     esAmigo(Uno, E),
     esAmigo(E, Otro).
-
 
 
 
